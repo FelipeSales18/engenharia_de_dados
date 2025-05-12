@@ -1,0 +1,41 @@
+use armazem;
+
+select nomecliente, genero from cliente;
+
+select nomeproduto, preco from produto;
+
+select idcompra, dtcompra from compras;
+
+select nomecliente, estadocivil, cidade from cliente;
+
+select * from cliente;
+
+select nomecliente, estadocivil from cliente order by nomecliente asc;
+
+select nomeproduto, preco from produto order by preco desc;
+
+select nomecliente, estado, cidade from cliente order by estado, cidade asc;
+
+select estado, nomecliente from cliente order by 1;
+
+select distinct dtcompra from compras order by 1;
+
+select nomeproduto, preco from produto where preco > 5;
+
+select nomecliente, estadocivil from cliente where genero = 'F';
+
+select nomecliente, cidade from cliente where estado = 'Rio de Janeiro';
+
+select nomecliente from cliente where dtnascimento < '2005-01-01';
+
+select distinct idcliente from compras where dtcompra between '2021-01-01' and '2021-12-31';
+
+select distinct idcliente, extract(year from dtcompra) from compras where extract(year from dtcompra) = '2020' order by dtcompra;
+
+select nomecliente from cliente where nomecliente like 'A%';
+
+select nomecliente from cliente where nomecliente like '%ana%';
+
+select nomecliente, estadocivil, estado from cliente where estado = 'Rio de Janeiro' or estado = 'Sao Paulo' or estado = 'Minas Gerais' or estado = 'Espirito Santo';
+
+select nomecliente, case when estadocivil = 'S' then 'solteiro' when estadocivil = 'C' then 'casado' when estadocivil = 'D' then 'divorciado' else 'viuva' end from cliente;
