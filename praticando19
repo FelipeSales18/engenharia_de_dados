@@ -1,0 +1,45 @@
+use armazem;
+
+select pr.nomeproduto, ma.nomemarca 
+from produto as pr, marca as ma 
+where pr.idmarca = ma.idmarca;
+
+select cl.nomecliente, pr.nomeproduto
+from cliente as cl, compras as co, produto as pr
+where cl.idcliente = co.idcliente
+and co.idproduto = pr.idproduto;
+
+select cl.nomecliente, cl.estado, lj.nomeloja, lj.uf
+from cliente as cl, loja as lj, compras as co
+where cl.idcliente = co.idcliente
+and co.idloja = lj.idloja
+and co.qtd > 40;
+
+select pr.nomeproduto, pr.preco, ma.nomemarca
+from produto as pr inner join marca as ma
+on pr.idmarca = ma.idmarca;
+
+select ma.nomemarca, co.dtcompra, co.qtd
+from compras as co inner join produto as pr on co.idproduto = pr.idproduto
+inner join marca as ma on pr.idmarca = ma.idmarca; 
+
+-- adicao dos clientes
+INSERT INTO cliente
+(idcliente,nomecliente,genero,estadocivil,dtnascimento,cidade,estado)
+VALUES
+(501, 'Alba', 'F', 'V', '1982/10/25', 'Duque de Caxias','Rio de Janeiro'),
+(502, 'Solimar', 'F', 'V', '1972/11/25', 'Niterói','Rio de Janeiro'),
+(503, 'Pablo', 'M', 'C', '1999/03/01', 'Nova Iguaçu','Rio de Janeiro'),
+(504, 'Solange', 'F', 'S', '1979/06/05', 'Salvador', 'Bahia'),
+(505, 'Mário', 'M', 'S', '1985/07/22', 'Bragança Paulista', 'São Paulo');
+
+select cl.nomecliente, co.idcompra
+from cliente as cl left join compras as co
+on cl.idcliente = co.idcliente;
+
+select ma.nomemarca, pr.nomeproduto
+from marca as ma right join produto as pr
+on ma.idmarca = pr.idmarca;
+
+
+
