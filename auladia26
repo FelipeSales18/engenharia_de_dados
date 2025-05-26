@@ -124,3 +124,26 @@ on co.idproduto = pr.idproduto
 group by cl.nomecliente
 order by total desc
 limit 5;
+
+-- ex21
+select count(idcliente) as total_cliente, estado
+from cliente
+group by estado 
+having total_cliente > 50;
+
+-- ex22 
+select sum(preco * qtd) as faturamento, nomemarca
+from produto as pr inner join compras as co
+on pr.idproduto = co.idproduto
+inner join marca as ma
+on ma.idmarca = pr.idmarca
+group by nomemarca
+having faturamento > 25000; 
+
+-- ex23
+select count(qtd * idcompra) as qtd_compras, nomecliente
+from compras as co inner join cliente as cl
+on co.idcliente = cl.idcliente
+group by nomecliente
+having qtd_compras < 5
+order by nomecliente asc;
