@@ -1,0 +1,126 @@
+use armazem; 
+
+-- ex1
+select max(preco)
+from produto;
+
+-- ex2
+select min(qtd)
+from compras;
+
+-- ex3
+select avg(qtd)
+from compras;
+
+-- ex4
+select count(nomecliente)
+from cliente
+where estado = 'Rio de janeiro';
+
+-- ex5
+select avg(preco)
+from produto;
+
+-- ex6  cai na prova!!!
+select count(*) as qtdbomprato
+from compras as co inner join produto as pr
+on co.idproduto = pr.idproduto
+inner join marca as ma
+on ma.idmarca = pr.idmarca
+where nomemarca = 'Bom Prato';
+
+
+-- ex7
+select count(idproduto)
+from compras as co inner join loja as lo
+on co.idloja = lo.idloja
+where nomeloja = 'Vale Verde';
+
+-- ex8
+select sum(qtd)
+from compras as co inner join loja as lo
+on co.idloja = lo.idloja
+where uf = 'MG';
+
+-- ex9
+update produto set nomeproduto = 'Macarrão' where nomeproduto = 'Marcarrão';
+select sum(qtd)
+from compras as co inner join produto as pr
+on co.idproduto = pr.idproduto
+where nomeproduto = 'Marcarrão';
+
+-- ex10
+select count(*) as qtdtotal
+from compras;
+
+-- ex11
+select count(*) as qtdcli, estado
+from cliente
+group by estado
+order by estado asc; -- aqui foi organizado por ordem alfabetica
+
+-- ex12
+select count(*) as qtdloja, uf
+from loja
+group by uf
+order by uf asc;
+
+-- ex13
+select count(idproduto), nomemarca
+from marca as ma inner join produto as pr
+on ma.idmarca = pr.idmarca
+group by nomemarca;
+
+-- ex14
+select sum(preco * qtd), nomemarca
+from compras as co inner join produto as pr
+on co.idproduto = pr.idproduto
+inner join marca as ma
+on ma.idmarca = pr.idmarca
+group by nomemarca; -- pode cair na prova!!!
+
+-- ex15
+select pr.nomeproduto, avg(co.qtd)  as media_de_vendas
+from compras as co inner join produto as pr
+on co.idproduto = pr.idproduto
+group by nomeproduto
+order by nomeproduto asc;
+
+-- ex16
+select sum(qtd * preco) as faturamento, nomeloja
+from compras as co inner join produto as pr
+on co.idproduto = pr.idproduto
+inner join loja as lo
+on lo.idloja = co.idloja
+group by nomeloja;
+
+-- ex17
+select cl.nomecliente, sum(co.qtd) as totalcomprado
+from compras as co inner join cliente as cl
+on co.idcliente = cl.idcliente
+group by cl.nomecliente
+order by totalcomprado desc;
+
+-- ex18
+select count(*) as num_clientes, cidade
+from cliente
+group by cidade
+order by num_clientes desc
+limit 5;
+
+-- ex19 
+select pr.nomeproduto, sum(co.qtd) as total
+from compras as co inner join produto as pr 
+on co.idproduto = pr.idproduto
+group by pr.nomeproduto
+order by total desc;
+
+-- ex20
+select cl.nomecliente, sum(pr.preco * co.qtd) as total
+from compras as co inner join cliente as cl
+on co.idcliente = cl.idcliente
+inner join produto as pr
+on co.idproduto = pr.idproduto
+group by cl.nomecliente
+order by total desc
+limit 5;
