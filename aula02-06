@@ -1,0 +1,82 @@
+use armazem;
+
+-- ex24
+select nomeproduto
+from produto
+where preco = (select max(preco) as maicaro
+from produto);
+
+-- ex25
+
+select nomecliente
+from cliente
+where idcliente not in (
+select distinct idcliente
+from compras)
+order by nomecliente;
+
+-- ex26
+
+select nomeproduto
+from produto
+where idproduto not in(
+select distinct idproduto
+from compras
+where year(dtcompra) = 2021);
+
+-- ex27
+create view vw_produto as
+select pr.nomeproduto, pr.preco, ma.nomemarca
+from produto as pr inner join marca as ma
+on pr.idmarca = ma.idmarca
+order by pr.nomeproduto;
+
+select * from vw_produto;
+
+select * from cliente;
+
+-- ex27
+create view vw_nomepreco as 
+select pr.nomeproduto, pr.preco, ma.nomemarca
+from produto as pr inner join marca as ma
+on pr.idmarca = ma.idmarca
+order by pr.nomeproduto;
+
+select * from vw_nomepreco;
+
+-- ex28
+create view vw_vertudo as 
+select co.idcompra, cl.nomecliente, pr.nomeproduto, ma.nomemarca, lj.nomeloja, co.dtcompra, co.qtd, pr.preco, pr.preco*co.qtd
+from produto as pr inner join compras as co
+on pr.idproduto = co.idproduto
+inner join marca as ma
+on pr.idmarca = ma.idmarca
+inner join loja as lj
+on lj.idloja = co.idloja
+inner join cliente as cl
+on cl.idcliente = co.idcliente
+order by nomecliente;
+
+select * from vw_vertudo;
+
+-- ex29
+select count(*) as qtdcompras from vw_vertudo;
+
+-- ex30
+select sum(preco*qtd) as valor_total from vw_vertudo;
+
+-- ex31
+select max(preco*qtd), min(preco*qtd) from vw_vertudo;
+
+-- ex32
+select avg(preco*qtd) as valor_medio from vw_vertudo;
+
+-- ex33
+select (preco*qtd)
+from vw_vertudo
+where preco*qtd > (
+select avg(preco*qtd) 
+from vw_vertudo)
+order by preco*qtd asc;
+
+
